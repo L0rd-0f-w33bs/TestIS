@@ -130,7 +130,7 @@ function HotelItem({
       <div className="flex flex-col flex-1">
         <div className="flex justify-between mb-6 items-center">
           <p className="font-bold text-3xl">{item.name}</p>
-          <TransitionsModal />
+          <TransitionsModal item={item} />
         </div>
         <p className="flex items-center gap-2 text-lg mb-6">
           <MapPinned className="w-4 h-4" /> {item.address}
@@ -175,7 +175,14 @@ const style = {
   p: 4,
 };
 
-function TransitionsModal() {
+function TransitionsModal({
+  item,
+}: {
+  item: {
+    address: string;
+    name: string;
+  };
+}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -278,6 +285,16 @@ function TransitionsModal() {
                       tag: data[1].labels,
                       predict_positive: data[0].sentiment === "pos",
                     });
+
+                    data[1].labels.forEach(async (i: string) => {
+                      console.log(i)
+                      const { error } = await supabase.from("data").insert({
+                        label: i,
+                        name: item.name,
+                        address: item.address,
+                      });
+                    });
+
                     setOpen(false);
                   })
                   .catch((error) => {
