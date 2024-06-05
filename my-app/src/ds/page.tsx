@@ -79,10 +79,10 @@ function BasicTable({
                 {row.review}
               </TableCell>
               <TableCell align="center">
-                {row.positive ? "Yes" : "No"}
+                {row.positive ? "Positive" : "Negative"}
               </TableCell>
               <TableCell align="center">
-                {row.predict_positive ? "Yes" : "No"}
+                {row.predict_positive ? "Positive" : "Negative"}
               </TableCell>
               <TableCell align="left">
                 {row.tag.map((item, index) => {
